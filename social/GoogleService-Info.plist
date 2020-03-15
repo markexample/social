@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>580454763407-hf2jhkmqopqll4vm1f3lnatds4719fia.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.580454763407-hf2jhkmqopqll4vm1f3lnatds4719fia</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>580454763407-o5j53lo0b3073a6aslfaf258pv06jof3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCU4sB0aoMXUScTtOVbaopOOj1TH2d_7_g</string>
+	<key>GCM_SENDER_ID</key>
+	<string>580454763407</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.daltontechnologies.social</string>
+	<key>PROJECT_ID</key>
+	<string>androidsocialapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>androidsocialapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:580454763407:ios:3b5aa33a82ad98d3eb19fa</string>
+	<key>DATABASE_URL</key>
+	<string>https://androidsocialapp.firebaseio.com</string>
+</dict>
+</plist>
