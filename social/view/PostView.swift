@@ -91,13 +91,22 @@ struct PostView: View {
                 Spacer()
                 VStack(spacing: 0){
                     Text(TITLE)
+                        .foregroundColor(.black)
                         .font(.system(size: TITLE_FONT_SIZE)).bold()
                         .padding([.leading, .top], INNER_PADDING)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
                         .frame(height: TITLE_TEXT_FIELD_SPACING)
-                    TextField(PLACEHOLDER, text: $message)
-                        .padding([.leading, .trailing], INNER_PADDING)
+                    ZStack(alignment: .leading) {
+                        if message.isEmpty {
+                            Text(PLACEHOLDER)
+                                .foregroundColor(.gray)
+                                .padding([.leading, .trailing], INNER_PADDING)
+                        }
+                        TextField("", text: $message)
+                            .padding([.leading, .trailing], INNER_PADDING)
+                            .foregroundColor(.black)
+                    }
                     Divider()
                         .padding([.leading, .bottom, .trailing], INNER_PADDING)
                 }

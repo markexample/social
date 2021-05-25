@@ -57,6 +57,12 @@ class Util: NSObject {
         return UIEdgeInsets()
     }
     
+    /// Gets the first letter from the profile name
+    static func getProfileFirstLetter() -> String {
+        guard let name = Auth.auth().currentUser?.displayName else { return "" }
+        return String(name.prefix(1)).uppercased()
+    }
+    
     /// Get the profile picture url string based on quality type
     /// - Parameter quality: Quality type of high or low for size of profile picture returned
     static func getProfilePic(quality: PROFILE_PIC_QUALITY)->String{

@@ -59,6 +59,18 @@ struct ListView: View {
     /// Post model for post data on list
     @ObservedObject var pm: PostModel
     
+    /// Size for the profile pic
+    private let PROFILE_PIC_SIZE = CGFloat(30)
+    
+    /// Font size for the profile pic letter
+    private let PROFILE_PIC_FONT_SIZE = CGFloat(20)
+    
+    /// Border line width for the profile picture
+    private let BORDER_LINE_WIDTH = CGFloat(4)
+    
+    /// Color used in profile pic view
+    private let PROFILE_PIC_COLOR = Color(red: 255/255, green: 145/255, blue: 148/255)
+    
     /// Outside padding on main view of rows
     private let OUTSIDE_PADDING = CGFloat(20)
     
@@ -73,6 +85,9 @@ struct ListView: View {
     
     /// Vertical spacing between profile picture and message
     private let PHOTO_MESSAGE_SPACING = CGFloat(15)
+    
+    /// Background color of list view
+    private let LIST_VIEW_BACKGROUND_COLOR = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
     
     /// Initializer for list view
     /// - Parameters:
@@ -101,18 +116,59 @@ struct ListView: View {
         return pm.profilePosts
     }
     
+    // Custom List for iOS 14 list separator issue
+    struct CustomList<Content: View>: View {
+        
+        /// Background color of list view
+        private let LIST_VIEW_BACKGROUND_COLOR = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        
+        /// Outside padding on main view of rows
+        private let OUTSIDE_PADDING = CGFloat(10)
+        
+        let content: () -> Content
+        
+        var body: some View {
+            if #available(iOS 14.0, *) {
+                ScrollView {
+                    Rectangle()
+                        .frame(width: 1, height: 1)
+                        .foregroundColor(.clear)
+                    LazyVStack{
+                        self.content()
+                    }
+                        .background(Color(LIST_VIEW_BACKGROUND_COLOR))
+                        .padding([.leading, .trailing], self.OUTSIDE_PADDING)
+                    Rectangle()
+                        .frame(width: 1, height: 1)
+                        .foregroundColor(.clear)
+                }
+                .background(Color(LIST_VIEW_BACKGROUND_COLOR))
+            } else {
+                List {
+                    self.content()
+                }
+                .listStyle(PlainListStyle())
+            }
+        }
+    }
+    
     // Body for list view
     var body: some View{
-        List{
+        CustomList{
             ForEach(0..<getPosts().count, id: \.self){ index in
                 VStack(spacing: self.PHOTO_MESSAGE_SPACING){
                     HStack{
-                        KFImage(URL(string: self.getPosts()[index].profilePic)!)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: Constants.SMALL_PROFILE_PIC_SIZE, height: Constants.SMALL_PROFILE_PIC_SIZE)
-                            .clipShape(Circle())
+                        Circle()
+                            .stroke(PROFILE_PIC_COLOR, lineWidth: BORDER_LINE_WIDTH)
+                            .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE, alignment: .center)
                             .padding([.leading, .top], self.OUTER_PADDING)
+                            .overlay(
+                                Text(String(self.getPosts()[index].name.prefix(1)).uppercased())
+                                    .font(.system(size: PROFILE_PIC_FONT_SIZE).bold())
+                                    .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE, alignment: .center)
+                                    .foregroundColor(.black)
+                                    .padding([.leading, .top], self.OUTER_PADDING)
+                            )
                         VStack{
                             Text(self.getPosts()[index].name)
                                 .foregroundColor(.black)

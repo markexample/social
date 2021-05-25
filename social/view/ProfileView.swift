@@ -17,7 +17,13 @@ struct ProfileView: View {
     @ObservedObject var pm: PostModel
     
     /// Size of the main profile picture
-    private let PROFILE_PIC_SIZE = CGFloat(120)
+    private let PROFILE_PIC_SIZE = CGFloat(80)
+    
+    /// Color used in profile pic view
+    private let PROFILE_PIC_COLOR = Color(red: 255/255, green: 145/255, blue: 148/255)
+    
+    /// Font size for the profile pic letter
+    private let PROFILE_PIC_FONT_SIZE = CGFloat(40)
     
     /// Font size for the main profile name
     private let NAME_FONT_SIZE = CGFloat(25)
@@ -47,19 +53,23 @@ struct ProfileView: View {
         ZStack{
             Constants.PAGE_BACKGROUND_COLOR.edgesIgnoringSafeArea(.all)
             VStack{
-                KFImage(
-                    URL(string: Util.getProfilePic(quality: .high))!)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE)
-                    .clipShape(Circle())
-                    .shadow(color: Constants.SHADOW_COLOR, radius: Constants.SECONDARY_SHADOW_RADIUS, x: Constants.SECONDARY_SHADOW_X_Y, y: Constants.SECONDARY_SHADOW_X_Y)
-                    .overlay(Circle().stroke(Color.white, lineWidth: BORDER_LINE_WIDTH))
+                Circle()
+                    .stroke(PROFILE_PIC_COLOR, lineWidth: BORDER_LINE_WIDTH)
+                    .background(Circle().fill(Color.white))
+                    .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE, alignment: .center)
+                    .overlay(
+                        Text(Util.getProfileFirstLetter())
+                            .font(.system(size: PROFILE_PIC_FONT_SIZE).bold())
+                            .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE, alignment: .center)
+                            .foregroundColor(.black)
+                    )
                 Text(Auth.auth().currentUser!.displayName!)
                     .font(.system(size: NAME_FONT_SIZE)).bold()
+                    .foregroundColor(.black)
                 ZStack{
                     ListView(type: .profile, pm: pm)
                     Text(PLACEHOLDER_NO_POSTS)
+                        .foregroundColor(.black)
                         .opacity(pm.profilePosts.count == 0 ? PLACEHOLDER_OPACITY : 0)
                 }
             }
