@@ -24,34 +24,31 @@ struct PostView: View {
     private let PLACEHOLDER = "Type message here."
     
     /// Title of post button
-    private let POST_TITLE = "POST"
+    private let POST_TITLE = "Post"
     
     /// State variable for message of text field
     @State var message: String = ""
-    
-    /// Outter padding of main view
-    private let OUTER_PADDING = CGFloat(16)
     
     /// Inner padding of main view
     private let INNER_PADDING = CGFloat(20)
     
     /// Font size of title in main view
-    private let TITLE_FONT_SIZE = CGFloat(27)
+    private let TITLE_FONT_SIZE = CGFloat(17)
     
     /// Font size of post button
-    private let POST_FONT_SIZE = CGFloat(20)
+    private let POST_FONT_SIZE = CGFloat(17)
     
     /// Vertical padding of post button
-    private let POST_PADDING_VERTICAL = CGFloat(15)
+    private let POST_PADDING_VERTICAL = CGFloat(8)
     
     /// Horizontal padding of post button
-    private let POST_PADDING_HORIZONTAL = CGFloat(25)
+    private let POST_PADDING_HORIZONTAL = CGFloat(32)
     
     /// Corner radius of main view
     private let VIEW_CORNER_RADIUS = CGFloat(8)
     
     /// Vertical spacing between title and text field of main view
-    private let TITLE_TEXT_FIELD_SPACING = CGFloat(50)
+    private let TITLE_TEXT_FIELD_SPACING = CGFloat(30)
     
     /// State boolean for showing snackbars
     @State var showSnackbar: Bool = false
@@ -84,11 +81,9 @@ struct PostView: View {
     
     // Body of post view
     var body: some View {
-        ZStack{
+        ZStack(alignment: .top){
             Constants.PAGE_BACKGROUND_COLOR.edgesIgnoringSafeArea(.all)
             VStack(spacing: VIEW_POST_SPACING){
-                Spacer()
-                Spacer()
                 VStack(spacing: 0){
                     Text(TITLE)
                         .foregroundColor(.black)
@@ -108,11 +103,10 @@ struct PostView: View {
                             .foregroundColor(.black)
                     }
                     Divider()
-                        .padding([.leading, .bottom, .trailing], INNER_PADDING)
+                        .padding([.all], INNER_PADDING)
                 }
                 .background(Color.white)
                 .cornerRadius(VIEW_CORNER_RADIUS)
-                .padding([.leading, .trailing], OUTER_PADDING)
                 ZStack{
                     Text(POST_TITLE)
                         .font(.custom(Constants.ROBOTO_CONDENSED_BOLD, size: POST_FONT_SIZE))
@@ -128,8 +122,6 @@ struct PostView: View {
                             self.post()
                         })
                 )
-                Spacer()
-                Spacer()
             }
         }
         .snackbar(isShowing: $showSnackbar, text: Text(snackbarMessage))

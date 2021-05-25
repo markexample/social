@@ -67,7 +67,7 @@ public struct ContentView: View {
     private let TABS_PADDING_BOTTOM = CGFloat(3)
     
     /// Height of the header view
-    private let HEADER_HEIGHT = CGFloat(25)
+    private let HEADER_HEIGHT = CGFloat(15)
     
     /// Height of the footer containing the tabs
     private let FOOTER_HEIGHT = CGFloat(30)

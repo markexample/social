@@ -51,22 +51,23 @@ struct ProfileView: View {
     /// Body of profile view
     var body: some View {
         ZStack{
-            Constants.PAGE_BACKGROUND_COLOR.edgesIgnoringSafeArea(.all)
+            Color.white
+                .edgesIgnoringSafeArea(.all)
             VStack{
                 Circle()
-                    .stroke(PROFILE_PIC_COLOR, lineWidth: BORDER_LINE_WIDTH)
-                    .background(Circle().fill(Color.white))
+                    .fill(PROFILE_PIC_COLOR)
                     .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE, alignment: .center)
                     .overlay(
                         Text(Util.getProfileFirstLetter())
                             .font(.system(size: PROFILE_PIC_FONT_SIZE).bold())
                             .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE, alignment: .center)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                     )
                 Text(Auth.auth().currentUser!.displayName!)
                     .font(.system(size: NAME_FONT_SIZE)).bold()
                     .foregroundColor(.black)
                 ZStack{
+                    Constants.PAGE_BACKGROUND_COLOR.edgesIgnoringSafeArea(.all)
                     ListView(type: .profile, pm: pm)
                     Text(PLACEHOLDER_NO_POSTS)
                         .foregroundColor(.black)

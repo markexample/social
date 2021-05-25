@@ -25,7 +25,7 @@ struct LoginView: View {
     private let BACKGROUND_COLOR = Color(red: 255/255, green: 145/255, blue: 148/255)
     
     /// Title of the log in button
-    @State private var buttonTitle = "CONTINUE WITH FACEBOOK"
+    @State private var buttonTitle = "Continue with Facebook"
     
     /// Corner radius for the log in button
     private let BUTTON_CORNER_RADIUS = CGFloat(8)

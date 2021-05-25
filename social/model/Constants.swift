@@ -18,7 +18,7 @@ struct Constants{
     static let SMALL_PROFILE_PIC_SIZE = CGFloat(50)
     
     /// Background color of main view in pages
-    static let PAGE_BACKGROUND_COLOR = Color(red: 230/255, green: 230/255, blue: 230/255)
+    static let PAGE_BACKGROUND_COLOR = Color.white
     
     /// Shadow color used for all shadows
     static let SHADOW_COLOR = Color(red: 17/255, green: 17/255, blue: 17/255, opacity: 0.10)
@@ -37,4 +37,7 @@ struct Constants{
     
     /// Font name for Roboto Condensed Bold
     static let ROBOTO_CONDENSED_BOLD = "RobotoCondensed-Bold"
+    
+    /// Background color of list view
+    static let LIST_VIEW_BACKGROUND_COLOR = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
 }

@@ -60,7 +60,7 @@ struct ListView: View {
     @ObservedObject var pm: PostModel
     
     /// Size for the profile pic
-    private let PROFILE_PIC_SIZE = CGFloat(30)
+    private let PROFILE_PIC_SIZE = CGFloat(35)
     
     /// Font size for the profile pic letter
     private let PROFILE_PIC_FONT_SIZE = CGFloat(20)
@@ -86,8 +86,8 @@ struct ListView: View {
     /// Vertical spacing between profile picture and message
     private let PHOTO_MESSAGE_SPACING = CGFloat(15)
     
-    /// Background color of list view
-    private let LIST_VIEW_BACKGROUND_COLOR = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+    /// Vertical spacing between date and message
+    private let DATE_MESSAGE_SPACING = CGFloat(10)
     
     /// Initializer for list view
     /// - Parameters:
@@ -116,57 +116,21 @@ struct ListView: View {
         return pm.profilePosts
     }
     
-    // Custom List for iOS 14 list separator issue
-    struct CustomList<Content: View>: View {
-        
-        /// Background color of list view
-        private let LIST_VIEW_BACKGROUND_COLOR = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
-        
-        /// Outside padding on main view of rows
-        private let OUTSIDE_PADDING = CGFloat(10)
-        
-        let content: () -> Content
-        
-        var body: some View {
-            if #available(iOS 14.0, *) {
-                ScrollView {
-                    Rectangle()
-                        .frame(width: 1, height: 1)
-                        .foregroundColor(.clear)
-                    LazyVStack{
-                        self.content()
-                    }
-                        .background(Color(LIST_VIEW_BACKGROUND_COLOR))
-                        .padding([.leading, .trailing], self.OUTSIDE_PADDING)
-                    Rectangle()
-                        .frame(width: 1, height: 1)
-                        .foregroundColor(.clear)
-                }
-                .background(Color(LIST_VIEW_BACKGROUND_COLOR))
-            } else {
-                List {
-                    self.content()
-                }
-                .listStyle(PlainListStyle())
-            }
-        }
-    }
-    
     // Body for list view
     var body: some View{
-        CustomList{
+        List{
             ForEach(0..<getPosts().count, id: \.self){ index in
-                VStack(spacing: self.PHOTO_MESSAGE_SPACING){
+                VStack(spacing: CGFloat.zero){
                     HStack{
                         Circle()
-                            .stroke(PROFILE_PIC_COLOR, lineWidth: BORDER_LINE_WIDTH)
+                            .fill(PROFILE_PIC_COLOR)
                             .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE, alignment: .center)
                             .padding([.leading, .top], self.OUTER_PADDING)
                             .overlay(
                                 Text(String(self.getPosts()[index].name.prefix(1)).uppercased())
                                     .font(.system(size: PROFILE_PIC_FONT_SIZE).bold())
                                     .frame(width: PROFILE_PIC_SIZE, height: PROFILE_PIC_SIZE, alignment: .center)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                     .padding([.leading, .top], self.OUTER_PADDING)
                             )
                         VStack{
@@ -182,6 +146,8 @@ struct ListView: View {
                                 .padding([.leading], self.INNER_LEADING_PADDING)
                         }
                     }
+                    Spacer()
+                        .frame(height: DATE_MESSAGE_SPACING)
                     Text(self.getPosts()[index].message)
                         .foregroundColor(.black)
                         .font(.system(size: self.MESSAGE_FONT_SIZE)).bold()
@@ -189,11 +155,9 @@ struct ListView: View {
                         .padding([.leading, .bottom], self.OUTER_PADDING)
                         .fixedSize(horizontal: false, vertical: true)
                 }
+                .listRowBackground(Color.white)
                 .frame(maxWidth: .infinity)
-                .listRowInsets(EdgeInsets(top: index == 0 ? self.ROW_TOP_BOTTOM_PADDING + self.LIST_TOP_BOTTOM_PADDING : self.ROW_TOP_BOTTOM_PADDING, leading: self.ROW_LEADING_TRAILING_PADDING, bottom: index == self.getPosts().count - 1 ? self.ROW_TOP_BOTTOM_PADDING + self.LIST_TOP_BOTTOM_PADDING : self.ROW_TOP_BOTTOM_PADDING, trailing: self.ROW_LEADING_TRAILING_PADDING))
                 .background(Color.white)
-                .cornerRadius(self.ROW_CORNER_RADIUS)
-                .shadow(color: Constants.SHADOW_COLOR, radius: Constants.SECONDARY_SHADOW_RADIUS, x: Constants.SECONDARY_SHADOW_X_Y, y: Constants.SECONDARY_SHADOW_X_Y)
             }
         }
         .onAppear{
